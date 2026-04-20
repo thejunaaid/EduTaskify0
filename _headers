@@ -1,0 +1,36 @@
+# ══════════════════════════════════════════════════════
+# CLOUDFLARE PAGES SECURITY HEADERS — EduTaskify
+# Deploy this file at the ROOT of your site
+# (same folder as index.html)
+# ══════════════════════════════════════════════════════
+
+/*
+  # Block clickjacking — nobody can embed your site in an iframe
+  X-Frame-Options: DENY
+
+  # Prevent MIME-type sniffing attacks
+  X-Content-Type-Options: nosniff
+
+  # Control referrer info sent to other sites
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # Block access to camera, mic, location — not needed for EduTaskify
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+  # XSS Protection (legacy browsers)
+  X-XSS-Protection: 1; mode=block
+
+  # HTTPS only — never allow HTTP (HSTS)
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Content Security Policy - CHANGE: Firebase ke liye update kiya
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://cdn.jsdelivr.net https://www.google.com https://apis.google.com https://securetoken.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://raw.githubusercontent.com https://firebasestorage.googleapis.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com wss://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; frame-src https://edutaskify.firebaseapp.com https://accounts.google.com; object-src 'none'; base-uri 'self'
+
+# CHANGE: Service Worker ke liye ye block add kiya - Bahut zaroori
+/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /
+
+# CHANGE: HTML ko hamesha fresh load kar, warna update nahi dikhega
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
